@@ -6,3 +6,8 @@ inventory/*
 .vagrant/*
 *.retry
 
+# Ignore Vim files
+*.sess
+*.swp
+*.swa
+
