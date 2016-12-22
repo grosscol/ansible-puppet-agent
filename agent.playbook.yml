@@ -1,0 +1,7 @@
+---
+- name: install and config puppet agent
+  hosts: puppet_agent
+  become: yes
+  roles:
+    - role: puppet-agent
+      tags: ['agent']
