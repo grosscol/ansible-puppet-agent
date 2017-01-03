@@ -1,3 +1,6 @@
+# Use scratch directory for transient work
+scratch/*
+
 # Only include the example inventory 
 inventory/*
 !ineventory/example_inventory
