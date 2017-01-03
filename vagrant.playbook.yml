@@ -1,53 +1,12 @@
 ---
-- name: Puppet Suite
-  hosts: all
-  become: yes
-  tasks:
-  - name: install_source_list
-    apt:
-      deb: "https://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb"
-      state: "present"
-
-  - name: update_packages
-    apt:
-      update_cache: "yes"
-
-- name: Puppet Master
+- name: puppet master 
   hosts: puppet_master
   become: yes
-  tasks:
-  - name: install_puppet_server
-    apt:
-      name: "puppetserver"
-      state: "present"
-  - name: install_vim
-    apt:
-      name: "vim"
-      state: "present"
+  roles:
+    - role: puppet-master
+      tags: ['vagrant','puppet']
 
-  - name: lower_memory
-    lineinfile:
-      dest: "/etc/default/puppetserver"
-      regexp: "^JAVA_ARGS=.*"
-      state: "present"
-      line: 'JAVA_ARGS="-Xms512m -Xmx1024m -XX:MaxPermSize=256m"'
-
-  - name: auto_sign_whitelist
-    lineinfile:
-      dest: "/etc/puppetlabs/puppet/autosign.conf"
-      regexp: '\*\.umdl\.umich\.edu'
-      line: '*.umdl.umich.edu'
-      state: "present"
-      create: "yes"
-      mode: "u=rw,g=rw"
-
-  - name: start_puppet_server
-    service: 
-      name: 'puppetserver.service' 
-      enabled: 'yes'
-      state: 'started'
-
-- name: puppet_agent
+- name: puppet agent
   hosts: puppet_agent
   become: yes
   roles:

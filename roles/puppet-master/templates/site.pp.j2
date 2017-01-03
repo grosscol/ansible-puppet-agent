@@ -1,0 +1,22 @@
+node default {
+
+}
+
+node 'agent.umdl.umich.edu' {
+  class { 'rbenv': }
+  rbenv::plugin { [ 'sstephenson/rbenv-vars', 'sstephenson/ruby-build' ]: }
+  rbenv::build { '2.2.3': global => true }
+  rbenv::gem { 'bundler': ruby_version => '2.2.3' }
+}
+
+node 'puppet.umdl.umich.edu' {
+  class { 'puppetdb': }
+  class { 'puppetdb::master::config': 
+             puppetdb_server => 'puppet',
+             puppetdb_port => 8081,
+        }
+  class { 'rbenv': }
+  rbenv::plugin { [ 'sstephenson/rbenv-vars', 'sstephenson/ruby-build' ]: }
+  rbenv::build { '2.2.3': global => true }
+  rbenv::gem { 'librarian-puppet': ruby_version => '2.2.3' }
+}

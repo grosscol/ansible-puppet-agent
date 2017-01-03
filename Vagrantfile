@@ -41,6 +41,8 @@ Vagrant.configure("2") do |config|
 			ansible.groups = {
 				"puppet_master" => ["puppet"],
 				"puppet_agent" => ["dum","dee"],
+        "puppet_master:vars" => {"pa_master_addr" => "192.168.90.10", 
+                                 "pa_master_fqdn" => "puppet"},
         "puppet_agent:vars" => {"pa_master_addr" => "192.168.90.10", 
                                 "pa_master_fqdn" => "puppet"}
 			}

@@ -1,0 +1,58 @@
+---
+- name: install_source_list
+  apt:
+    deb: "https://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb"
+    state: "present"
+
+- name: update_packages
+  apt:
+    update_cache: "yes"
+
+- name: install_puppet_server
+  apt:
+    name: "puppetserver"
+    state: "present"
+
+- name: install_vim
+  apt:
+    name: "vim"
+    state: "present"
+
+- name: lower_memory
+  lineinfile:
+    dest: "/etc/default/puppetserver"
+    regexp: "^JAVA_ARGS=.*"
+    state: "present"
+    line: 'JAVA_ARGS="-Xms512m -Xmx1024m -XX:MaxPermSize=256m"'
+
+- name: autosign whitelist
+  lineinfile:
+    dest: "/etc/puppetlabs/puppet/autosign.conf"
+    regexp: '\*\.umdl\.umich\.edu'
+    line: '*.umdl.umich.edu'
+    state: "present"
+    create: "yes"
+    mode: "u=rw,g=rw"
+
+- name: add_master_ip_entry
+  lineinfile: 
+    dest: /etc/hosts 
+    regexp: '.*puppet$' 
+    line: "{{pa_master_addr}}  puppet" 
+    state: "present"
+  when: pa_master_addr is defined
+
+- name: write puppet conf
+  template:
+    src:   puppet.conf.j2 
+    dest:  /etc/puppetlabs/puppet/puppet.conf
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+  when: pa_master_fqdn is defined
+
+- name: start or bounce puppet server
+  service: 
+    name: 'puppetserver.service' 
+    enabled: 'yes'
+    state: 'restarted'

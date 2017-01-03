@@ -15,4 +15,13 @@ Install and minimally configure puppet-agent.
     ansible-playbook -i inventory/yourinventory puppet-agent.playbook.yml
     ```
 
+## Vagrant testing
 
+1. Start up Vagrant
+    ```
+    vagrant up
+    ```
+Both variables `pa_master_ip` and `pa_master_fqdn` are defined in the Vagrant file.
+The fqdn is set to `puppet` which is the hostname that will be written into `/etc/hosts` when the ip is specified.
+This arrangement means that the agent will use the specified fqdn (puppet) and that the ip address for that can be resolved using the hosts file.
+The specified fqdn is used. If changing it to something else, make sure dns or hosts will resolve the new fqdn.

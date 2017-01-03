@@ -1,0 +1,26 @@
+---
+- name: install rbenv puppet module
+  command: './puppet module install jdowning-rbenv'
+  args:
+    chdir: '/opt/puppetlabs/bin'
+
+- name: install puppetdb module
+  command: './puppet module install puppetlabs-puppetdb'
+  args:
+    chdir: '/opt/puppetlabs/bin'
+
+- name: copy initial manifest 
+  template:
+    src: site.pp.j2
+    dest: /etc/puppetlabs/code/environments/production/manifests/site.pp
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+
+- name: manually run puppet agent
+  command: './puppet agent --test'
+  register: pa_result
+  changed_when: pa_result.rc == 2
+  failed_when:  pa_result.rc == 1
+  args:
+    chdir: '/opt/puppetlabs/bin'
