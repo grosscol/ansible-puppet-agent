@@ -2,12 +2,7 @@ node default {
 
 }
 
-node 'agent.umdl.umich.edu' {
-  class { 'rbenv': }
-  rbenv::plugin { [ 'sstephenson/rbenv-vars', 'sstephenson/ruby-build' ]: }
-  rbenv::build { '2.2.3': global => true }
-  rbenv::gem { 'bundler': ruby_version => '2.2.3' }
-}
+### The puppet server node
 
 node 'puppet.umdl.umich.edu' {
   class { 'puppetdb': }
@@ -20,3 +15,19 @@ node 'puppet.umdl.umich.edu' {
   rbenv::build { '2.2.3': global => true }
   rbenv::gem { 'librarian-puppet': ruby_version => '2.2.3' }
 }
+
+### The tweedle dummy nodes
+
+node 'dum.umdl.umich.edu' {
+  class { 'rbenv': }
+  rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
+  rbenv::build { '2.2.3': global => true }
+}
+
+node 'dee.umdl.umich.edu' {
+  class { 'rbenv': }
+  rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
+  rbenv::build { '2.2.3': global => true }
+  rbenv::gem { 'thor': ruby_version => '2.2.3' }
+}
+
