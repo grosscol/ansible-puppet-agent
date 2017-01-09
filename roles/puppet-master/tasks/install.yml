@@ -18,21 +18,17 @@
     name: "vim"
     state: "present"
 
+- name: install curl
+  apt:
+    name: "curl"
+    state: "present"
+
 - name: lower_memory
   lineinfile:
     dest: "/etc/default/puppetserver"
     regexp: "^JAVA_ARGS=.*"
     state: "present"
     line: 'JAVA_ARGS="-Xms512m -Xmx1024m -XX:MaxPermSize=256m"'
-
-- name: autosign whitelist
-  lineinfile:
-    dest: "/etc/puppetlabs/puppet/autosign.conf"
-    regexp: '\*\.umdl\.umich\.edu'
-    line: '*.umdl.umich.edu'
-    state: "present"
-    create: "yes"
-    mode: "u=rw,g=rw"
 
 - name: add_master_ip_entry
   lineinfile: 
@@ -50,6 +46,18 @@
     group: root
     mode:  u=rwx,g=rx,o=rx
   when: pa_master_fqdn is defined
+
+- name: make hiera data directory
+  file:
+    path: /etc/puppetlabs/code/environments/production/hieradata/nodes
+    mode:  u=rwx,g=rx,o=rx
+    state: directory
+
+- name: demo hiera data
+  template:
+    src: hiera_dum.yaml.j2 
+    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dum.example.com.yaml
+    mode:  u=rwx,g=rx,o=rx
 
 - name: start or bounce puppet server
   service: 

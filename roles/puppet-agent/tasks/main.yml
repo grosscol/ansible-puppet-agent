@@ -35,4 +35,3 @@
     name: 'puppet.service' 
     enabled: 'yes'
     state: 'started'
-

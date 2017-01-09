@@ -4,7 +4,7 @@ node default {
 
 ### The puppet server node
 
-node 'puppet.umdl.umich.edu' {
+node /puppet.*/ {
   class { 'puppetdb': }
   class { 'puppetdb::master::config': 
              puppetdb_server => 'puppet',
@@ -18,13 +18,13 @@ node 'puppet.umdl.umich.edu' {
 
 ### The tweedle dummy nodes
 
-node 'dum.umdl.umich.edu' {
+node /dum.*/ {
   class { 'rbenv': }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
 }
 
-node 'dee.umdl.umich.edu' {
+node /dee.*/ {
   class { 'rbenv': }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
