@@ -1,3 +1,8 @@
+### Class to utilize hiera data
+class umich::taghosts ( Array $tags ){
+  tag $tags
+}
+
 node default {
 
 }
@@ -14,6 +19,7 @@ node /puppet.*/ {
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
   rbenv::gem { 'librarian-puppet': ruby_version => '2.3.1' }
+  class { 'umich::taghosts': }
 }
 
 ### The tweedle dummy nodes
@@ -22,6 +28,7 @@ node /dum.*/ {
   class { 'rbenv': }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
+  class { 'umich::taghosts': }
 }
 
 node /dee.*/ {
@@ -29,5 +36,6 @@ node /dee.*/ {
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
   rbenv::gem { 'thor': ruby_version => '2.3.1' }
+  class { 'taghosts': }
 }
 

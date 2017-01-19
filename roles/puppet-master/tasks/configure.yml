@@ -1,5 +1,4 @@
 ---
-
 - name: lower_memory
   lineinfile:
     dest: "/etc/default/puppetserver"
@@ -36,10 +35,22 @@
     dest: /etc/puppetlabs/puppet/hiera.yaml
     mode:  u=rwx,g=rx,o=rx
 
-- name: demo hiera data
+- name: hiera data for dum
   template:
     src: hiera_dum.yaml.j2 
     dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dum.yaml
+    mode:  u=rwx,g=rx,o=rx
+
+- name: hiera data for dee
+  template:
+    src: hiera_dee.yaml.j2 
+    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dee.yaml
+    mode:  u=rwx,g=rx,o=rx
+
+- name: hiera data for puppet
+  template:
+    src: hiera_puppet.yaml.j2 
+    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/puppet.yaml
     mode:  u=rwx,g=rx,o=rx
 
 - name: start or bounce puppet server

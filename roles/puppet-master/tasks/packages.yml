@@ -1,0 +1,24 @@
+---
+- name: install_source_list
+  apt:
+    deb: "https://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb"
+    state: "present"
+
+- name: update_packages
+  apt:
+    update_cache: "yes"
+
+- name: install_puppet_server
+  apt:
+    name: "puppetserver"
+    state: "present"
+
+- name: install_vim
+  apt:
+    name: "vim"
+    state: "present"
+
+- name: install curl
+  apt:
+    name: "curl"
+    state: "present"

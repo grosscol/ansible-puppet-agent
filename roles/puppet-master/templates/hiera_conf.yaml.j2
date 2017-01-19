@@ -1,0 +1,9 @@
+---
+:backends:
+  - yaml
+:hierarchy:
+  - "nodes/%{::trusted.hostname}"
+  - common
+:yaml:
+  :datadir: "/etc/puppetlabs/code/environments/%{environment}/hieradata"
+
