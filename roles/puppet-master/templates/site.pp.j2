@@ -15,27 +15,26 @@ node /puppet.*/ {
              puppetdb_server => 'puppet',
              puppetdb_port => 8081,
         }
-  class { 'rbenv': }
+  class { 'rbenv': install_dir => '/l/local/rbenv' }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
-  rbenv::gem { 'librarian-puppet': ruby_version => '2.3.1' }
+  rbenv::gem { 'r10k': ruby_version => '2.3.1' }
   class { 'umich::taghosts': }
 }
 
 ### The tweedle dummy nodes
 
 node /dum.*/ {
-  class { 'rbenv': }
+  class { 'rbenv': install_dir => '/l/local/rbenv' }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
   class { 'umich::taghosts': }
 }
 
 node /dee.*/ {
-  class { 'rbenv': }
+  class { 'rbenv': install_dir => '/l/local/rbenv' }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   rbenv::build { '2.3.1': global => true }
-  rbenv::gem { 'thor': ruby_version => '2.3.1' }
   class { 'taghosts': }
 }
 
