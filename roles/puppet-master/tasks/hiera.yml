@@ -1,0 +1,32 @@
+- name: make hiera data directory
+  file:
+    path: /etc/puppetlabs/code/environments/production/hieradata/nodes
+    mode:  u=rwx,g=rx,o=rx
+    state: directory
+
+- name: write hiera config
+  template:
+    src: hiera_conf.yaml.j2 
+    dest: /etc/puppetlabs/puppet/hiera.yaml
+    mode:  u=rwx,g=rx,o=rx
+  notify:
+    - bounce puppet server
+
+- name: hiera data for dum
+  template:
+    src: hiera_dum.yaml.j2 
+    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dum.yaml
+    mode:  u=rwx,g=rx,o=rx
+
+- name: hiera data for dee
+  template:
+    src: hiera_dee.yaml.j2 
+    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dee.yaml
+    mode:  u=rwx,g=rx,o=rx
+
+- name: hiera data for puppet
+  template:
+    src: hiera_puppet.yaml.j2 
+    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/puppet.yaml
+    mode:  u=rwx,g=rx,o=rx
+

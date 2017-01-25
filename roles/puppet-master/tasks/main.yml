@@ -2,3 +2,5 @@
 - include: packages.yml
 - include: configure.yml
 - include: bootstrap.yml
+- include: hiera.yml
+- include: r10k.yml

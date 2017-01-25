@@ -17,7 +17,7 @@
     group: root
     mode:  u=rwx,g=rx,o=rx
 
-- name: manually run puppet agent
+- name: manually agent run
   command: './puppet agent --test'
   register: pa_result
   changed_when: pa_result.rc == 2

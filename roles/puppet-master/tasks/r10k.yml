@@ -1,0 +1,19 @@
+- name: make r10k directory
+  file:
+    path: /etc/puppetlabs/r10k
+    mode:  u=rwx,g=rx,o=rx
+    state: directory
+
+- name: write r10k conf
+  template:
+    src:   r10k.yaml.j2 
+    dest:  /etc/puppetlabs/r10k/r10k.yaml
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+
+- name: unpack sample control repo
+  unarchive:
+    src: control-repo.tgz
+    dest: /opt/repos/control-repo.tgz
+

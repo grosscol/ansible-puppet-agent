@@ -1,0 +1,11 @@
+---
+cachedir: /var/cache/r10k
+sources:
+  control:
+    remote: file:///opt/repos/control-repo.git
+    basedir: $codedir/environments
+    puppet_filename: Puppetfile
+git:
+  provider: shellgit
+forge:
+  baseurl: 'https://forgeapi.puppetlabs.com'

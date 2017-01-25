@@ -5,8 +5,10 @@
     regexp: "^JAVA_ARGS=.*"
     state: "present"
     line: 'JAVA_ARGS="-Xms512m -Xmx1024m -XX:MaxPermSize=256m"'
+  notify:
+    - bounce puppet server
 
-- name: add_master_ip_entry
+- name: add master ip entry
   lineinfile: 
     dest: /etc/hosts 
     regexp: '.*puppet$' 
@@ -22,39 +24,5 @@
     group: root
     mode:  u=rwx,g=rx,o=rx
   when: pa_master_fqdn is defined
-
-- name: make hiera data directory
-  file:
-    path: /etc/puppetlabs/code/environments/production/hieradata/nodes
-    mode:  u=rwx,g=rx,o=rx
-    state: directory
-
-- name: hiera config
-  template:
-    src: hiera_conf.yaml.j2 
-    dest: /etc/puppetlabs/puppet/hiera.yaml
-    mode:  u=rwx,g=rx,o=rx
-
-- name: hiera data for dum
-  template:
-    src: hiera_dum.yaml.j2 
-    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dum.yaml
-    mode:  u=rwx,g=rx,o=rx
-
-- name: hiera data for dee
-  template:
-    src: hiera_dee.yaml.j2 
-    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/dee.yaml
-    mode:  u=rwx,g=rx,o=rx
-
-- name: hiera data for puppet
-  template:
-    src: hiera_puppet.yaml.j2 
-    dest: /etc/puppetlabs/code/environments/production/hieradata/nodes/puppet.yaml
-    mode:  u=rwx,g=rx,o=rx
-
-- name: start or bounce puppet server
-  service: 
-    name: 'puppetserver.service' 
-    enabled: 'yes'
-    state: 'restarted'
+  notify:
+    - bounce puppet server

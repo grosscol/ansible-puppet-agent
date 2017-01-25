@@ -1,0 +1,6 @@
+
+- name: bounce puppet server
+  service: 
+    name: 'puppetserver.service' 
+    enabled: 'yes'
+    state: 'restarted'
