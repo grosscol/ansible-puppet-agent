@@ -35,14 +35,16 @@ Starting with a fresh set of vms that have been provisioned.
     ```sudo su -```
 3. Examine custom data stuffed into puppetdb. The following examples are custom data where the source is in hiera (`/etc/puppetlabs/code/environments/production/hieradata/`), the tags get applied via a custom class umich::taghosts, and that gets collected into puppetdb to be ~conveniently~ querried.
   * The taghost tags for the puppet host
-      ```
+      ```sh
+      
       curl -X POST http://localhost:8080/pdb/query/v4/resources \
       -H 'Content-Type:application/json' \
       -d '{"query": [ "extract", ["certname", "parameters"], [ "and", [ "=", "title", "Umich::Taghosts"], [ "~", "certname", "^puppet" ] ] ] }' \
       | jq '.'
       ```
     the result should look something like the following
-      ```
+      ```json
+      
 			[
 				{
 					"certname": "puppet.umdl.umich.edu",
@@ -55,7 +57,8 @@ Starting with a fresh set of vms that have been provisioned.
 			]
       ```
   * The unique tags of the resources that also contain the tag "umich::taghosts"
-      ```
+      ```sh
+      
       curl -X POST http://localhost:8080/pdb/query/v4/resources \
       -H 'Content-Type:application/json' \
       -d '{"query":["extract", ["tags"], ["=","tag","umich::taghosts"] ]}' | jq 'map(.tags)|add|unique'
@@ -69,23 +72,27 @@ Starting with a fresh set of vms that have been provisioned.
     r10k deploy environment production -v
     ```
 5. Run librarian-puppet to resolve dependencies of puppet modules in the Puppetfile and install them.
-    ```
+    ```sh
+    
     cd /etc/puppetlabs/code/environments/production
     librarian-puppet install --verbose
     ```
 6. Manually run puppet agent
-    ```
+    ```sh
+    
     puppet agent --test -v
     ```
 7. Re-run puppet db query for tags for puppet host.
-    ```
+    ```sh
+    
     curl -X POST http://localhost:8080/pdb/query/v4/resources \
     -H 'Content-Type:application/json' \
     -d '{"query": [ "extract", ["certname", "parameters"], [ "and", [ "=", "title", "Umich::Taghosts"], [ "~", "certname", "^puppet" ] ] ] }' \
     | jq '.'
     ```
     The result should now look something like the following
-    ```
+    ```json
+    
 		[
 			{
 				"certname": "puppet.umdl.umich.edu",
