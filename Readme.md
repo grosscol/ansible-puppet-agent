@@ -72,11 +72,13 @@ Starting with a fresh set of vms that have been provisioned.
       -d '{"query":["extract", ["tags"], ["=","tag","umich::taghosts"] ]}' | jq 'map(.tags)|add|unique'
       ```
 4. Make a copy of the existing puppet environment so you can compare the differences after deploying with r10k.
-    ```
+    ```sh
+    
     cp -r /etc/puppetlabs/code/environments/production /opt/repos/archived-puppet-production
     ```
 4. Run r10k to update the puppet environment. This will replace the existing code and hiera config with that from the control repo. Compare the new production environment to the archived directory to see what changes were made.
-    ```
+    ```sh
+    
     r10k deploy environment production -v
     ```
 5. Run librarian-puppet to resolve dependencies of puppet modules in the Puppetfile and install them.
