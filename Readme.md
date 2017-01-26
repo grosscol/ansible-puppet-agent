@@ -36,7 +36,7 @@ Starting with a fresh set of vms that have been provisioned.
     ```sh 
     sudo su -
     ```
-3. Run the puppet agent on the puppet server node.
+3. Run the puppet agent on the puppet server node.  Notice the configuration version being applied is numeric timestamp (posix time).
     ```sh
     
     puppet agent --test -v
@@ -85,10 +85,15 @@ Starting with a fresh set of vms that have been provisioned.
     cd /etc/puppetlabs/code/environments/production
     librarian-puppet install --verbose
     ```
-6. Manually run puppet agent
+6. Manually run puppet agent.  Notice that the configuration version is now the SHA of a commit.
     ```sh
     
     puppet agent --test -v
+    ```
+6. Check the sha1 of the head of the production branch of the repository r10k pulled from.  This should match the configuration version puppet reported applying in the previous step.
+    ```sh
+    
+    git --git-dir /opt/repos/control-repo/.git rev-list --max-count=1 production
     ```
 7. Re-run puppet db query for tags for puppet host.
     ```sh
