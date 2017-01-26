@@ -12,8 +12,13 @@
     group: root
     mode:  u=rwx,g=rx,o=rx
 
+- name: create repos directory
+  file: 
+    path: /opt/repos
+    mode:  u=rwx,g=rx,o=rx
+    state: directory
+
 - name: unpack sample control repo
   unarchive:
     src: control-repo.tgz
-    dest: /opt/repos/control-repo.tgz
-
+    dest: /opt/repos/

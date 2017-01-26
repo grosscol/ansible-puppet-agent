@@ -17,6 +17,12 @@
     group: root
     mode:  u=rwx,g=rx,o=rx
 
+- name: ensure puppetmaster is running
+  service: 
+    name: 'puppetserver.service' 
+    enabled: 'yes'
+    state: 'started'
+
 - name: manually agent run
   command: './puppet agent --test'
   register: pa_result
