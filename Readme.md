@@ -10,7 +10,7 @@ Install and minimally configure puppet-agent.
 1. Make sure your puppetserver is up, running, and accessible on port 8140
 1. Run
     ```
-    ansible-playbook -i inventory/yourinventory puppet-agent.playbook.yml
+    ansible-playbook -i inventory/yourinventory agent.playbook.yml
     ```
 
 ## Vagrant testing
