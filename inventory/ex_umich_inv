@@ -1,0 +1,11 @@
+# Replace SERVERNAME with the actual server name.  E.g. malificent
+SERVERNAME         ansible_ssh_host=SERVERNAME.umdl.umich.edu         ansible_ssh_port=22
+
+# Add servers in the puppet agent section that you want to
+# install puppet agent on.
+[puppet_agent]
+SERVERNAME
+
+# Specify the name of the server that is running puppetserver
+[puppet_agent:vars]
+pa_master_fqdn=PUPPET-SERVER-NAME.umdl.umich.edu
