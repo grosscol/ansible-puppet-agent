@@ -15,13 +15,13 @@ INVENTORY_FILE=$1
 ANSIBLE_TMP_HOME=/tmp/${USER}-ansible
 mkdir -p /tmp/${USER}-ansible/control-paths
 
-ANSIBLE_LOCAL_TMP=${ANSIBLE_TMP_HOME}
-ANSIBLE_REMOTE_USER=root
+export ANSIBLE_LOCAL_TMP=${ANSIBLE_TMP_HOME}
+export ANSIBLE_REMOTE_USER=root
 
 # Will be supported config option in 2.3.0
-ANSIBLE_SSH_CONTROL_PATH_DIR=${ANSIBLE_TMP_HOME}/control-paths
+export ANSIBLE_SSH_CONTROL_PATH_DIR=${ANSIBLE_TMP_HOME}/control-paths
 
-HOME=${ANSIBLE_TMP_HOME}
+export HOME=${ANSIBLE_TMP_HOME}
 
 # Pass the inventory file in as the first arguement
 ansible-playbook -i ${INVENTORY_FILE} agent.playbook.yml
