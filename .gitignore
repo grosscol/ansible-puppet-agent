@@ -1,7 +1,10 @@
 # Use scratch directory for transient work
 scratch/*
 
-# Only include the example inventories
+# directory shared with puppet server VM
+vmshared/*
+
+# Only include the example inventory 
 inventory/*
 !inventory/ex_vagrant_inv
 !inventory/ex_umich_inv
