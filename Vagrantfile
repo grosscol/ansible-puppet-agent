@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
     machine.vm.hostname = 'puppet'
     machine.vm.box = "debian/jessie64"
     machine.vm.network "private_network", ip: "192.168.90.10"
-    machine.vm.synced_folder ".", "/vagrant", disabled: true
+    machine.vm.synced_folder "./vmshared", "/vmshared", type: "rsync", disabled: true
     machine.vm.provider "virtualbox" do |v|
       v.memory = 3072
     end
