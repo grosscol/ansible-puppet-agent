@@ -3,5 +3,5 @@
   hosts: puppet_agent
   become: yes
   roles:
-    - role: puppet-agent
+    - role: puppet_agent
       tags: ['agent']
