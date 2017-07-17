@@ -4,14 +4,12 @@
     deb: "https://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb"
     state: "present"
 
-- name: update_packages
-  apt:
-    update_cache: "yes"
-
 - name: install_puppet
   apt:
     name: "puppet-agent"
     state: "present"
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: add_master_ip_entry
   lineinfile: 
@@ -20,6 +18,7 @@
     line: "{{pa_master_addr}}  puppet" 
     state: "present"
   when: pa_master_addr is defined
+  notify: restart puppet
 
 - name: write puppet conf
   template:
@@ -29,6 +28,7 @@
     group: root
     mode:  u=rwx,g=rx,o=rx
   when: pa_master_fqdn is defined
+  notify: restart puppet
 
 - name: start_puppet
   service: 
