@@ -3,12 +3,12 @@
   hosts: puppet_master
   become: yes
   roles:
-    - role: puppet-master
+    - role: puppet_master
       tags: ['vagrant','puppet']
 
 - name: puppet agent
   hosts: puppet_agent
   become: yes
   roles:
-    - role: puppet-agent
+    - role: puppet_agent
       tags: ['vagrant','agent']
